@@ -55,4 +55,4 @@ services:
     ports:
       - "${MYSQL_PORT}:3306"
     networks:
-      - backend
+      - app-network
