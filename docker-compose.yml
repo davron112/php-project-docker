@@ -5,8 +5,6 @@ networks:
     driver: ${NETWORKS_DRIVER}
 
 services:
-
-  ### Caddy ################################################
   caddy:
     build: ./caddy
     volumes:
@@ -22,13 +20,14 @@ services:
     networks:
       - app-network
 
-  ### Php-fpm ################################################
   php-fpm:
     build:
       context: ./php-fpm
-    image: digitalocean.com/php
+    image: php:7.4-fpm
     container_name: app
     restart: unless-stopped
+    volumes:
+      - ${APP_CODE_PATH_HOST}:/var/www/
     tty: true
     environment:
       SERVICE_NAME: php-fpm
@@ -37,7 +36,6 @@ services:
     networks:
       - app-network
 
-  ### Mysql ################################################
   mysql:
     build:
       context: ./mysql
